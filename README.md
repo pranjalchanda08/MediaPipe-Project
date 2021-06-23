@@ -16,6 +16,8 @@ python3 main.py
 ## License
 Just copy and use it. I am not gonna complaint
 
+## Screen Shots
+<p align="center"><img src="images/Screenshot_2021-06-23.jpg" width=676 height=450></p>
 ## Reference
 [Mediapipe](https://google.github.io/mediapipe/)
 [OpenCV](https://pypi.org/project/opencv-python/)
