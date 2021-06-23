@@ -1,10 +1,13 @@
 import cv2
+import time
 import HandTracking as ht
 
-def main():    
+def main( showFps = False ):    
     # Capture the video stream Webcam
-    cap = cv2.VideoCapture(0)
-
+    cap   = cv2.VideoCapture(0)
+    ptime = 0
+    ctime = 0
+    fps   = 0
     track = ht.HandTracking()
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
@@ -13,9 +16,24 @@ def main():
         # Flip input image horizontally
         flipImage = cv2.flip(img, 1)
         # Track and revert the image
-        track.findHands(flipImage, showFps = True)
+        ctime = time.time()
+        track.findHands(flipImage)
+        # Calculate FPS
+        if showFps:
+            ctime = time.time()
+            fps   = 1/(ctime - ptime)
+            ptime = ctime
+            # Include FPS text in image
+            cv2.putText(flipImage,
+                "FPS: {}".format(int(fps)),
+                (10,70),                        # Position
+                cv2.FONT_HERSHEY_PLAIN,
+                1,                              # Font size
+                (0,0,255),
+                2                               # Thickness
+                )
         # Show the resultant image
         cv2.imshow("Output", flipImage)
 
 if __name__ == '__main__':
-    main()
+    main(showFps = True)

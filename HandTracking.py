@@ -36,15 +36,11 @@ class HandTracking():
             min_tracking_confidence
             )
 
-    def findHands(self, imgBGR, showFps=False):
-        fps   = 0
-        ctime = 0
-        ptime = 0
+    def findHands(self, imgBGR, showFps=False, ctime = 0, ptime = 0):
         # Convert the image to RGB
         imgRGB = cv2.cvtColor(imgBGR, cv2.COLOR_BGR2RGB)
         # Process the RGB image using the model
         results = self.hands.process(imgRGB)
-
         if results.multi_hand_landmarks:
             # Itterate over all landmarks
             for landmarks in results.multi_hand_landmarks:
@@ -64,24 +60,10 @@ class HandTracking():
                     ]:
                     # Draw circles around the detections
                         cv2.circle(imgBGR, (cx,cy), 15, (255,0,255), cv2.FILLED)
-
                 # Draw the landmark points on image
                 self.mpDraw.draw_landmarks(
                     imgBGR,
                     landmarks,
                     self.mpHand.HAND_CONNECTIONS
                     )
-        # Calculate FPS
-        if showFps:
-            ctime = time.time()
-            fps   = 1/(ctime - ptime)
-            ptime = ctime
-            # Include FPS text in image
-            cv2.putText(imgBGR,
-                "FPS: {}".format(int(fps)),
-                (10,70),                        # Position
-                cv2.FONT_HERSHEY_PLAIN,
-                1,                              # Font size
-                (0,255,0),
-                1                               # Thickness
-                )
+        
