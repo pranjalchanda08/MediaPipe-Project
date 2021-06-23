@@ -2,7 +2,7 @@ import cv2
 import time
 import HandTracking as ht
 
-def main( showFps = False ):    
+def main( showFps = False ):
     # Capture the video stream Webcam
     cap   = cv2.VideoCapture(0)
     ptime = 0
@@ -15,11 +15,18 @@ def main( showFps = False ):
         success, img = cap.read()
         # Flip input image horizontally
         flipImage = cv2.flip(img, 1)
-        # Track and revert the image
+
         ctime = time.time()
-        cx,cy = track.findFingerTips(flipImage, 
-                                    Finger_list = None
-                                    ) # Add Finger string list else None
+        # Track and revert the image
+        track.findHand(flipImage)
+        pos_list_dict = track.findFingerTips(
+                                flipImage,
+                                finger_list     = None,    # Add Finger string list else None
+                                show_connected  = True,
+                                show_landmarks  = True,
+                                draw_tips       = False,
+                                hand_id_list    = [0, 1]
+                            )
         # Calculate FPS
         if showFps:
             ctime = time.time()
