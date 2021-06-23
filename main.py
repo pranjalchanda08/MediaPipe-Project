@@ -63,7 +63,7 @@ while cv2.waitKey(1) != (ord('q') or ord('Q')):
                     LM_DICT['RING_TIP'], 
                     LM_DICT['PINKY_TIP']
                 ]:
-                    # Draw circles around the detections
+                # Draw circles around the detections
                     cv2.circle(flipImage, (cx,cy), 15, (255,0,255), cv2.FILLED)
 
             # Draw the landmark points on image
