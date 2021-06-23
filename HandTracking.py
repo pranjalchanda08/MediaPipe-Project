@@ -82,12 +82,12 @@ class HandTracking():
                         h, w, c = imgBGR.shape
                         # Calculate the position of the landmark in the picture
                         cx , cy = int(w * lm.x), int(h * lm.y)
-                        # Append the x,y coordinates  of the landmark
-                        return_dict[str(hand_id)].append((cx, cy))
                         # Check if the landmark is present in the index list
-                        if index_ in Finger_points and draw_tips:
+                        if index_ in Finger_points:
+                            # Append the x,y coordinates  of the landmark
+                            return_dict[str(hand_id)].append((cx, cy)) 
                             # Draw circles around the detections
-                            cv2.circle(imgBGR, (cx,cy), 15, color, cv2.FILLED)
+                            cv2.circle(imgBGR, (cx,cy), 15, color, cv2.FILLED) if draw_tips else None
                     # Draw the landmark points on image
                     if show_landmarks:
                         self.mpDraw.draw_landmarks(
@@ -95,6 +95,36 @@ class HandTracking():
                             hand_landmarks,
                             self.mpHand.HAND_CONNECTIONS if show_connected else None
                             )
+        except :
+            pass
+        finally:
+            return return_dict
+
+    def findAllLandmarks(
+                        self,
+                        imgBGR,
+                        hand_id_list    = 0,
+                        finger_list     = None
+                    ):
+        try:
+            cx , cy = None, None
+            return_dict = {str(hand_id) : [] for hand_id in hand_id_list}
+            if finger_list is not None:
+                Finger_points = [self.LM_DICT[(finger.upper()+'_TIP')] for finger in finger_list]
+
+            if self.results.multi_hand_landmarks:
+                # Itterate over all hands
+                for hand_id in hand_id_list:
+                    return_dict[str(hand_id)] = []
+                    hand_landmarks = self.results.multi_hand_landmarks [ hand_id ]
+                    for index_, lm in enumerate(hand_landmarks.landmark):
+                        # Get the height and width of image
+                        h, w, c = imgBGR.shape
+                        # Calculate the position of the landmark in the picture
+                        cx , cy = int(w * lm.x), int(h * lm.y)
+                        # Check if the landmark is present in the index list
+                        # Append the x,y coordinates  of the landmark
+                        return_dict[str(hand_id)].append((cx, cy)) 
         except :
             pass
         finally:
