@@ -13,12 +13,12 @@ class HandTracking():
     ]
 
     def __init__(
-        self,
-        static_image_mode        = False,     # If True the whole time it will perform detection
-        max_num_hands            = 4,
-        min_detection_confidence = 0.7,
-        min_tracking_confidence  = 0.7
-        ):
+                self,
+                static_image_mode        = False,     # If True the whole time it will perform detection
+                max_num_hands            = 4,
+                min_detection_confidence = 0.7,
+                min_tracking_confidence  = 0.7
+                ):
         '''
             Initializes the HandTracking module
         '''
@@ -36,7 +36,27 @@ class HandTracking():
             min_tracking_confidence
             )
 
-    def findHands(self, imgBGR, showFps=False, ctime = 0, ptime = 0):
+    def findFingerTips( self, 
+                        imgBGR, 
+                        color=(255,255,255), 
+                        showConnected=False,
+                        showLandmarks=False,
+                        Finger_list=None
+                       ):
+        '''
+            Finds finger tips location on cv2.BGR image
+        '''
+        Finger_points = [
+                        self.LM_DICT['THUMB_TIP'],
+                        self.LM_DICT['INDEX_TIP'],
+                        self.LM_DICT['MIDDLE_TIP'],
+                        self.LM_DICT['RING_TIP'],
+                        self.LM_DICT['PINKY_TIP']
+                    ]
+        cx , cy = None, None
+        if Finger_list is not None:
+            Finger_points = [self.LM_DICT[(finger.upper()+'_TIP')] for finger in Finger_list]
+
         # Convert the image to RGB
         imgRGB = cv2.cvtColor(imgBGR, cv2.COLOR_BGR2RGB)
         # Process the RGB image using the model
@@ -50,20 +70,15 @@ class HandTracking():
                     # Calculate the position of the landmark in the picture
                     cx , cy = int(w * lm.x), int(h * lm.y)
                     # Check if the landmark is present in the index list
-                    if index_ in [
-                        self.LM_DICT['WRIST'],
-                        self.LM_DICT['THUMB_TIP'],
-                        self.LM_DICT['INDEX_TIP'],
-                        self.LM_DICT['MIDDLE_TIP'],
-                        self.LM_DICT['RING_TIP'],
-                        self.LM_DICT['PINKY_TIP']
-                    ]:
-                    # Draw circles around the detections
-                        cv2.circle(imgBGR, (cx,cy), 15, (255,0,255), cv2.FILLED)
+                    if index_ in Finger_points:
+                        # Draw circles around the detections
+                        cv2.circle(imgBGR, (cx,cy), 15, color, cv2.FILLED)
                 # Draw the landmark points on image
-                self.mpDraw.draw_landmarks(
-                    imgBGR,
-                    landmarks,
-                    self.mpHand.HAND_CONNECTIONS
-                    )
-        
+                if showLandmarks:
+                    self.mpDraw.draw_landmarks(
+                        imgBGR,
+                        landmarks,
+                        self.mpHand.HAND_CONNECTIONS if showConnected else None
+                        )
+
+        return cx,cy    

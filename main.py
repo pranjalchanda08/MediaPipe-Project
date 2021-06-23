@@ -17,7 +17,9 @@ def main( showFps = False ):
         flipImage = cv2.flip(img, 1)
         # Track and revert the image
         ctime = time.time()
-        track.findHands(flipImage)
+        cx,cy = track.findFingerTips(flipImage, 
+                                    Finger_list = None
+                                    ) # Add Finger string list else None
         # Calculate FPS
         if showFps:
             ctime = time.time()
