@@ -1,6 +1,6 @@
 import cv2
 import time
-import HandTracking as ht
+import hand_tracking as ht
 
 
 def main(show_fps=False, video_src=0):
