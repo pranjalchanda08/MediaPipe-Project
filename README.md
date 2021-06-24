@@ -11,7 +11,7 @@ pip3 install -r requirements.txt
 ```
 ## Run
 ```sh
-python3 main.py
+python3 hand_tracking_run.py
 ```
 ## License
 Just copy and use it. I am not gonna complaint
