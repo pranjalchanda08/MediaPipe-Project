@@ -1,23 +1,20 @@
-# OpenCV Hand Tracking
-A project using OpenCV and Mediapipe library to track the hand landmarks.
+# Mediapipe Projects
+A set of project using OpenCV and Mediapipe library.
 
 ## System Requirements
 * Python 3.2 - 3.7
-* No GPU requirements
+* **No GPU** requirements
 
 ## Installation
+Typically a pycharm based project. 
+
 ```sh
 pip3 install -r requirements.txt
 ```
-## Run
-```sh
-python3 hand_tracking_run.py
-```
-## License
-Just copy and use it. I am not gonna complaint
-
-## Screen Shots
-<p align="center"><img src="images/Screenshot_2021-06-23.jpg" width=676 height=450></p>
+## Utilities
+- [X] Hand Tracking
+- [ ] Pose Estimation
+- [ ] Face Detection
 
 ## Reference
 [Mediapipe](https://google.github.io/mediapipe/)
