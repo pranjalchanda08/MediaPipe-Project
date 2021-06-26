@@ -16,9 +16,9 @@ class HandTracking:
     def __init__(
             self,
             static_image_mode=False,  # If True the whole time it will perform detection
-            max_num_hands=4,
-            min_detection_confidence=0.7,
-            min_tracking_confidence=0.7
+            max_num_hands=2,
+            min_detection_confidence=0.8,
+            min_tracking_confidence=0.5
     ):
         """
             Initializes the HandTracking module
@@ -106,6 +106,12 @@ class HandTracking:
             hand_id_list=0,
             finger_list=None
     ):
+        """
+        :param img_bgr:
+        :param hand_id_list:
+        :param finger_list:
+        :return:
+        """
         try:
             cx, cy = None, None
             return_dict = {str(hand_id): [] for hand_id in hand_id_list}
@@ -177,6 +183,8 @@ def main(show_fps=False, video_src=0):
                         )
         # Show the resultant image
         cv2.imshow("Output", flip_image)
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
