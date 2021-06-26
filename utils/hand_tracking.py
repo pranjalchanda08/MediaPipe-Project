@@ -17,7 +17,7 @@ class HandTracking:
             self,
             static_image_mode=False,  # If True the whole time it will perform detection
             max_num_hands=2,
-            min_detection_confidence=0.5,
+            min_detection_confidence=0.8,
             min_tracking_confidence=0.5
     ):
         """
