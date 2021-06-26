@@ -177,6 +177,8 @@ def main(show_fps=False, video_src=0):
                         )
         # Show the resultant image
         cv2.imshow("Output", flip_image)
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
