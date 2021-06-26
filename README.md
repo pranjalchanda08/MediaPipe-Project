@@ -8,10 +8,14 @@ A set of project using OpenCV and Mediapipe library.
 
 ## Installation
 Typically a pycharm based project. 
-
-```sh
-pip3 install -r requirements.txt
-```
+* ### Ubuntu 20.04
+  ```sh
+  $ pip3 install -r requirements_linux.txt
+  ```
+* ### Windows 10
+  ```sh
+  /> pip3 install -r requirements_win.txt
+  ```  
 ## Utilities
 - [X] Hand Tracking
 - [ ] Pose Estimation
@@ -24,6 +28,9 @@ pip3 install -r requirements.txt
     $ cd MediaPipe-Project/Projects/P1-vol_control
     $ python3 vol_control.py
     ```
+  Compatibility: 
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
 
 ## Reference
 * [Mediapipe](https://google.github.io/mediapipe/)
