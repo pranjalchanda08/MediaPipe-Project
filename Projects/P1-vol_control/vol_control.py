@@ -3,7 +3,13 @@ try:
     import cv2
     import time
     import math
-    import alsaaudio
+    import platform
+    if platform.system() == "Windows":
+        from ctypes import cast, POINTER
+        from comtypes import CLSCTX_ALL
+        from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+    else:
+        import alsaaudio
     import numpy as np
     import utils.hand_tracking as ht
 except Exception:
@@ -35,7 +41,12 @@ def main(show_fps=False, video_src=0):
     cap.set(4, 740)
     previous_time = 0
     track = ht.HandTracking()
-    audio = alsaaudio.Mixer()
+    if platform.system() == "Windows":
+        interface = AudioUtilities.GetSpeakers().Activate(
+                    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+        volume = cast(interface, POINTER(IAudioEndpointVolume))
+    else:
+        audio = alsaaudio.Mixer()
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # # Read the frame
@@ -60,7 +71,11 @@ def main(show_fps=False, video_src=0):
             finger_list=None
         )
         # get current volume
-        vol = audio.getvolume()
+        if platform.system() == "Windows":
+            vol = volume.GetMasterVolumeLevel()
+            vol = int(np.interp(vol, [-65.25, 0.0], [0, 100]))
+        else:
+            vol = audio.getvolume()[0] 
         # Process the landmark
         if len(pos_list_dict['0']) != 0:
             # Get position indexes
@@ -78,11 +93,12 @@ def main(show_fps=False, video_src=0):
             dis_wrist_ring = vector_len((x_wrist, y_wrist), (x_ring, y_ring))
             dis_wrist_pinky = vector_len((x_wrist, y_wrist), (x_pinky, y_pinky))
 
-            print("Volume {}, Distance Middle: {}, Ring: {}, Pinky: {}".format(vol[0],
-                                                                               dis_wrist_middle,
-                                                                               dis_wrist_ring,
-                                                                               dis_wrist_pinky))
-            if (0 <= dis_wrist_middle <= 100) and (0 <= dis_wrist_ring <= 80) and (0 <= dis_wrist_pinky <= 90):
+            # print("Volume {}, Distance Index: {}, Middle: {}, Ring: {}, Pinky: {}".format(vol,
+            #                                                                    dis_thumb_index,
+            #                                                                    dis_wrist_middle,
+            #                                                                    dis_wrist_ring,
+            #                                                                    dis_wrist_pinky))
+            if (0 <= dis_wrist_middle <= 150) and (0 <= dis_wrist_ring <= 120) and (0 <= dis_wrist_pinky <= 120):
                 if dis_thumb_index < 30:
                     mapped = 0
                 elif dis_thumb_index > 220:
@@ -90,11 +106,17 @@ def main(show_fps=False, video_src=0):
                 else:
                     mapped = int(np.interp(dis_thumb_index, [30, 220], [0, 100]))
                 if 0 <= mapped <= 100:
-                    audio.setvolume(mapped)
-        vol_bar = int(np.interp(vol[0], [0, 100], [400, 150]))
+                    if platform.system() == "Windows":
+                        volume.SetMute(int(mapped == 0), None)
+                        volume.SetMasterVolumeLevel(
+                            np.interp(mapped, [0, 100], [-65.25, 0.0]), 
+                            None)
+                    else:
+                        audio.setvolume(mapped)
+        vol_bar = int(np.interp(vol, [0, 100], [400, 150]))
         cv2.rectangle(flip_image, (50, 150), (85, 400), (0, 255, 0), 5)
         cv2.rectangle(flip_image, (51, vol_bar), (84, 400), (255, 0, 0), cv2.FILLED)
-        cv2.putText(flip_image, "Vol: {}%".format(vol[0]), (40, 140), cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 2)
+        cv2.putText(flip_image, "Vol: {}%".format(vol), (40, 140), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 2)
         # Calculate FPS
         if show_fps:
             current_time = time.time()
