@@ -4,6 +4,7 @@ try:
     import time
     import math
     import platform
+
     if platform.system() == "Windows":
         from ctypes import cast, POINTER
         from comtypes import CLSCTX_ALL
@@ -43,7 +44,7 @@ def main(show_fps=False, video_src=0):
     track = ht.HandTracking()
     if platform.system() == "Windows":
         interface = AudioUtilities.GetSpeakers().Activate(
-                    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+            IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
         volume = cast(interface, POINTER(IAudioEndpointVolume))
     else:
         audio = alsaaudio.Mixer()
@@ -75,16 +76,16 @@ def main(show_fps=False, video_src=0):
             vol = volume.GetMasterVolumeLevel()
             vol = int(np.interp(vol, [-65.25, 0.0], [0, 100]))
         else:
-            vol = audio.getvolume()[0] 
-        # Process the landmark
+            vol = audio.getvolume()[0]
+            # Process the landmark
         if len(pos_list_dict['0']) != 0:
             # Get position indexes
-            (x_thumb_tip, y_thumb_tip) = (pos_list_dict['0'][track.LM_DICT['THUMB_TIP']])
-            (x_index_tip, y_index_tip) = (pos_list_dict['0'][track.LM_DICT['INDEX_TIP']])
-            (x_middle, y_middle) = (pos_list_dict['0'][track.LM_DICT['MIDDLE_TIP']])
-            (x_ring, y_ring) = (pos_list_dict['0'][track.LM_DICT['RING_TIP']])
-            (x_pinky, y_pinky) = (pos_list_dict['0'][track.LM_DICT['PINKY_TIP']])
-            (x_wrist, y_wrist) = (pos_list_dict['0'][track.LM_DICT['WRIST']])
+            x_thumb_tip, y_thumb_tip = pos_list_dict['0'][track.LM_DICT['THUMB_TIP']][:2]
+            x_index_tip, y_index_tip = pos_list_dict['0'][track.LM_DICT['INDEX_TIP']][:2]
+            x_middle, y_middle = pos_list_dict['0'][track.LM_DICT['MIDDLE_TIP']][:2]
+            x_ring, y_ring = pos_list_dict['0'][track.LM_DICT['RING_TIP']][:2]
+            x_pinky, y_pinky = pos_list_dict['0'][track.LM_DICT['PINKY_TIP']][:2]
+            x_wrist, y_wrist = pos_list_dict['0'][track.LM_DICT['WRIST']][:2]
             # Draw line between Thumb and Index tip
             cv2.line(flip_image, (x_thumb_tip, y_thumb_tip), (x_index_tip, y_index_tip), (0, 0, 255), 3)
             # Get vector lengths between landmarks
@@ -109,7 +110,7 @@ def main(show_fps=False, video_src=0):
                     if platform.system() == "Windows":
                         volume.SetMute(int(mapped == 0), None)
                         volume.SetMasterVolumeLevel(
-                            np.interp(mapped, [0, 100], [-65.25, 0.0]), 
+                            np.interp(mapped, [0, 100], [-65.25, 0.0]),
                             None)
                     else:
                         audio.setvolume(mapped)

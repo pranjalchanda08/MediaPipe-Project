@@ -85,7 +85,7 @@ class HandTracking:
                         # Check if the landmark is present in the index list
                         if index_ in finger_points:
                             # Append the x,y coordinates  of the landmark
-                            return_dict[str(hand_id)].append((cx, cy))
+                            return_dict[str(hand_id)].append((cx, cy, lm.z))
                             # Draw circles around the detections
                             cv2.circle(img_bgr, (cx, cy), 15, color, cv2.FILLED) if draw_tips else None
                     # Draw the landmark points on image
@@ -130,7 +130,7 @@ class HandTracking:
                         cx, cy = int(w * lm.x), int(h * lm.y)
                         # Check if the landmark is present in the index list
                         # Append the x,y coordinates  of the landmark
-                        return_dict[str(hand_id)].append((cx, cy))
+                        return_dict[str(hand_id)].append((cx, cy, lm.z))
         except Exception:
             pass
         finally:
