@@ -153,7 +153,7 @@ def main(show_fps=False, video_src=0):
 
         # Track and revert the image
         track.find_hand(flip_image)
-        pos_list_dict = track.find_finger_tips(
+        track.find_finger_tips(
             flip_image,
             finger_list=None,  # Add Finger string list else None
             show_connected=True,

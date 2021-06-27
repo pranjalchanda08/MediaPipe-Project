@@ -26,8 +26,8 @@ Typically, a pycharm based project.
   ```  
 ## Utilities
 - [X] Hand Tracking
+- [X] Face Detection
 - [ ] Pose Estimation
-- [ ] Face Detection
 
 ## Projects
 * ### P1: Hand Gesture based system volume control
