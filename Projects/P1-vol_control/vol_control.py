@@ -1,19 +1,18 @@
 try:
     import sys
-    import cv2
     import time
     import math
     import platform
-
     if platform.system() == "Windows":
         from ctypes import cast, POINTER
         from comtypes import CLSCTX_ALL
         from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
     else:
         import alsaaudio
+    from cv2 import cv2
     import numpy as np
     import utils.hand_tracking as ht
-except Exception:
+except ModuleNotFoundError:
     sys.path.append("../../")
 finally:
     import utils.hand_tracking as ht
@@ -48,6 +47,7 @@ def main(show_fps=False, video_src=0):
         volume = cast(interface, POINTER(IAudioEndpointVolume))
     else:
         audio = alsaaudio.Mixer()
+    tip_list = [12, 16, 20]
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # # Read the frame
@@ -78,28 +78,19 @@ def main(show_fps=False, video_src=0):
         else:
             vol = audio.getvolume()[0]
             # Process the landmark
-        if len(pos_list_dict['0']) != 0:
+        lms_list = pos_list_dict['0']
+        if len(lms_list) != 0:
             # Get position indexes
-            x_thumb_tip, y_thumb_tip = pos_list_dict['0'][track.LM_DICT['THUMB_TIP']][:2]
-            x_index_tip, y_index_tip = pos_list_dict['0'][track.LM_DICT['INDEX_TIP']][:2]
-            x_middle, y_middle = pos_list_dict['0'][track.LM_DICT['MIDDLE_TIP']][:2]
-            x_ring, y_ring = pos_list_dict['0'][track.LM_DICT['RING_TIP']][:2]
-            x_pinky, y_pinky = pos_list_dict['0'][track.LM_DICT['PINKY_TIP']][:2]
-            x_wrist, y_wrist = pos_list_dict['0'][track.LM_DICT['WRIST']][:2]
+            x_thumb_tip, y_thumb_tip = lms_list[track.LM_DICT['THUMB_TIP']][:2]
+            x_index_tip, y_index_tip = lms_list[track.LM_DICT['INDEX_TIP']][:2]
             # Draw line between Thumb and Index tip
             cv2.line(flip_image, (x_thumb_tip, y_thumb_tip), (x_index_tip, y_index_tip), (0, 0, 255), 3)
             # Get vector lengths between landmarks
             dis_thumb_index = vector_len((x_thumb_tip, y_thumb_tip), (x_index_tip, y_index_tip))
-            dis_wrist_middle = vector_len((x_wrist, y_wrist), (x_middle, y_middle))
-            dis_wrist_ring = vector_len((x_wrist, y_wrist), (x_ring, y_ring))
-            dis_wrist_pinky = vector_len((x_wrist, y_wrist), (x_pinky, y_pinky))
-
-            # print("Volume {}, Distance Index: {}, Middle: {}, Ring: {}, Pinky: {}".format(vol,
-            #                                                                    dis_thumb_index,
-            #                                                                    dis_wrist_middle,
-            #                                                                    dis_wrist_ring,
-            #                                                                    dis_wrist_pinky))
-            if (0 <= dis_wrist_middle <= 150) and (0 <= dis_wrist_ring <= 120) and (0 <= dis_wrist_pinky <= 120):
+            # Check if the volume control is triggered
+            trigger = sum([lms_list[finger][1] < lms_list[finger - 1][1] for finger in tip_list])
+            # Set the thresholds
+            if trigger == 0:
                 if dis_thumb_index < 30:
                     mapped = 0
                 elif dis_thumb_index > 220:

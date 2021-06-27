@@ -1,6 +1,12 @@
-import cv2
-import time
-import mediapipe as mp
+try:
+    import cv2
+    import time
+    import mediapipe as mp
+except ModuleNotFoundError:
+    import sys
+
+    print("Required modules to be installed")
+    sys.exit(-1)
 
 
 class HandTracking:
@@ -147,7 +153,7 @@ def main(show_fps=False, video_src=0):
         # Read the frame
         success, img = cap.read()
         if not success:
-            break
+            breaks
         # Flip input image horizontally
         flip_image = cv2.flip(img, 1)
 

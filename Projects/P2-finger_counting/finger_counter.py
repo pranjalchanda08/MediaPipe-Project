@@ -5,7 +5,7 @@ try:
     import math
     import numpy as np
     import utils.hand_tracking as ht
-except Exception:
+except ModuleNotFoundError:
     sys.path.append("../../")
 finally:
     import utils.hand_tracking as ht
