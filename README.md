@@ -45,7 +45,8 @@ Typically, a pycharm based project.
   Compatibility:
     - [X] Windows 10
     - [X] Ubuntu 20.04
-
+  
+    ![fc1](gallery/VolC.gif) 
 * ### P2: Finger Counter
   Real time right-hand finger counting
     ```shell
