@@ -141,13 +141,13 @@ def main(show_fps=False, video_src=0):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
-    current_time = 0
-    fps = 0
     track = HandTracking()
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # Read the frame
         success, img = cap.read()
+        if not success:
+            break
         # Flip input image horizontally
         flip_image = cv2.flip(img, 1)
 
