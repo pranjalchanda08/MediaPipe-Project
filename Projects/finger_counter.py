@@ -6,7 +6,7 @@ try:
     import numpy as np
     import utils.hand_tracking as ht
 except ModuleNotFoundError:
-    sys.path.append("../../")
+    sys.path.append("../")
 finally:
     import utils.hand_tracking as ht
 
