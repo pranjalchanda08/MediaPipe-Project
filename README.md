@@ -56,9 +56,7 @@ Typically, a pycharm based project.
     - [X] Windows 10
     - [X] Ubuntu 20.04
   
-  **Gallery**:
-  
-  ![fc1](images/fc1.png) ![fc2](images/fc2.png) ![fc1](images/fc3.png) ![fc2](images/fc4.png) 
+    ![fc1](gallery/FC.gif) 
       
 
 ## Reference
