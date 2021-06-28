@@ -23,7 +23,7 @@ class HandTracking:
             self,
             static_image_mode=False,  # If True the whole time it will perform detection
             max_num_hands=2,
-            min_detection_confidence=0.8,
+            min_detection_confidence=0.5,
             min_tracking_confidence=0.5
     ):
         """
@@ -142,16 +142,39 @@ class HandTracking:
         finally:
             return return_dict
 
+    def is_finger_up(self,
+                     img_bgr,
+                     hand_id_list=[0]
+                     ):
+        try:
+            finger_tip_list = [8, 12, 16, 20]
+            lms_dict = self.find_all_landmarks(img_bgr, hand_id_list)
+            ret_dict = {lms: [] for lms in lms_dict.keys()}
+            hand_orientation = True
+            for lms in lms_dict.keys():
+                if lms_dict[lms][17][0] > lms_dict[lms][5][0]:
+                    hand_orientation = False
+                ret_dict[lms] = []
+                thumb = lms_dict[lms][4][0] > lms_dict[lms][3][0] if hand_orientation else \
+                    lms_dict[lms][4][0] < lms_dict[lms][3][0]
+                ret_dict[lms].append(thumb)
+                for finger_tip in finger_tip_list:
+                    ret_dict[lms].append(lms_dict[lms][finger_tip][1] < lms_dict[lms][finger_tip - 3][1])
+            ret_dict['lms'] = lms_dict
+            return ret_dict
+        except IndexError:
+            return ret_dict
+
 
 def main(show_fps=False, video_src=0):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
     track = HandTracking(
-            static_image_mode=False,  # If True the whole time it will perform detection
-            max_num_hands=10,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.8)
+        static_image_mode=False,  # If True the whole time it will perform detection
+        max_num_hands=10,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.8)
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # Read the frame
