@@ -34,31 +34,41 @@ Typically, a pycharm based project.
 - [X] Face Detection
 - [ ] Pose Estimation
 
+![HT](gallery/Output/ht.gif)
+
 ## Projects
 
 * ### P1: Hand Gesture based system volume control
-  Real time volume control using mediapipe hand gesture recognition system.
+  **Objective:**
+  
+    Real time volume control using hand gesture. The volume of the system shall be controlled only when middle, ring and
+  pinky fingers are closed.
     ```shell
     cd MediaPipe-Project/Projects/P1-vol_control
     python3 vol_control.py
-    ```
-  Compatibility:
-    - [X] Windows 10
-    - [X] Ubuntu 20.04
-  
-    ![fc1](gallery/VolC.gif) 
-* ### P2: Finger Counter
-  Real time right-hand finger counting
-    ```shell
-    cd MediaPipe-Project/Projects/P2-finger_counting
-    python3 finger_counter.py
     ```
   **Compatibility**:
     - [X] Windows 10
     - [X] Ubuntu 20.04
   
-    ![fc1](gallery/FC.gif) 
-      
+    ![fc1](gallery/Output/VolC.gif) 
+* ### P2: Finger Counter
+  **Objective:**  
+
+  Real time finger counting.
+    ```shell
+    cd MediaPipe-Project/Projects/P2-finger_counting
+    python3 finger_counter.py
+    ```
+  **Known Limitation:**
+  1. The algorithm currently works only for right hand.
+  
+  **Compatibility**:
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
+  
+    ![fc1](gallery/Output/FC.gif) 
+  
 
 ## Reference
 

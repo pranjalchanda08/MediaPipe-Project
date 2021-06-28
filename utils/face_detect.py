@@ -2,14 +2,14 @@ try:
     import cv2
     import mediapipe as mp
     import time
-except Exception:
+except ModuleNotFoundError:
     print("Install required packages")
 
 
 class FaceDetect:
     def __init__(
             self,
-            min_detection_confidence=0.9,
+            min_detection_confidence=0.8,
             model_selection=0
     ):
         self.results = None
@@ -18,7 +18,8 @@ class FaceDetect:
         # Load media-pipe drawing utility
         self.mpDraw = mp.solutions.drawing_utils
         # Load Face detection model
-        self.face = self.mp_face.FaceDetection(min_detection_confidence, model_selection)
+        self.face = self.mp_face.FaceDetection(min_detection_confidence=min_detection_confidence,
+                                               model_selection=model_selection)
 
     def detect_faces(self, img_bgr):
         # Convert image to RGB
@@ -46,7 +47,7 @@ def main(show_fps=False, video_src=0):
     previous_time = 0
     detect = FaceDetect()
     # Infinite loop waiting for key 'q' to terminate
-    while cv2.waitKey(1) != (ord('q') or ord('Q')):
+    while cv2.waitKey(20) != (ord('q') or ord('Q')):
         # Read the frame
         success, img = cap.read()
         if not success:
@@ -77,4 +78,6 @@ def main(show_fps=False, video_src=0):
 
 
 if __name__ == "__main__":
-    main(show_fps=True)
+    video_list = ['face1']
+    for video in video_list:
+        main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))

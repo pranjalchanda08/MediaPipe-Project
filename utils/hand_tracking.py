@@ -147,13 +147,17 @@ def main(show_fps=False, video_src=0):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
-    track = HandTracking()
+    track = HandTracking(
+            static_image_mode=False,  # If True the whole time it will perform detection
+            max_num_hands=10,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.8)
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # Read the frame
         success, img = cap.read()
         if not success:
-            breaks
+            break
         # Flip input image horizontally
         flip_image = cv2.flip(img, 1)
 
@@ -164,7 +168,7 @@ def main(show_fps=False, video_src=0):
             finger_list=None,  # Add Finger string list else None
             show_connected=True,
             show_landmarks=True,
-            draw_tips=True,
+            draw_tips=False,
             hand_id_list=[0, 1]
         )
         pos_list_dict = track.find_all_landmarks(
@@ -172,7 +176,7 @@ def main(show_fps=False, video_src=0):
             hand_id_list=[0, 1],
             finger_list=None
         )
-        print(pos_list_dict)
+        # print(pos_list_dict)
         # Calculate FPS
         if show_fps:
             current_time = time.time()
@@ -194,4 +198,6 @@ def main(show_fps=False, video_src=0):
 
 
 if __name__ == '__main__':
-    main(show_fps=True)
+    video_list = ['hand1', 'hand2']
+    for video in video_list:
+        main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))
