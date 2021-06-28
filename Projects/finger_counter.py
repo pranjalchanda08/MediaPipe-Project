@@ -62,9 +62,13 @@ def main(show_fps=False, video_src=0):
         lms_list = pos_list_dict['0']
         total = 0
         tip_list = [8, 12, 16, 20]
+        hand_orientation = True
+
         if len(lms_list) != 0:
+            if lms_list[17][0] > lms_list[5][0]:
+                hand_orientation = False
             total = sum([lms_list[finger][1] < lms_list[finger - 1][1] for finger in tip_list])
-            total += lms_list[4][0] < lms_list[3][0]
+            total += lms_list[4][0] > lms_list[3][0] if hand_orientation else lms_list[4][0] < lms_list[3][0]
 
         cv2.putText(flip_image, "{}".format(total), (550, 100), cv2.FONT_HERSHEY_PLAIN, 7, (0, 0, 255), 6)
         # Calculate FPS

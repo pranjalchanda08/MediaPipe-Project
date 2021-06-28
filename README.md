@@ -7,7 +7,7 @@
 ![TF](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=TensorFlow&logoColor=white)
 ![Pcharm](https://img.shields.io/badge/PyCharm-000000.svg?&style=for-the-badge&logo=PyCharm&logoColor=white)
 
-A set of project using OpenCV and Mediapipe library.
+A set of project using OpenCV and Media Pipe library.
 
 ## System Requirements
 
@@ -16,8 +16,6 @@ A set of project using OpenCV and Mediapipe library.
 * **No GPU** requirements
 
 ## Installation
-
-Typically, a pycharm based project.
 
 * ### Ubuntu 20.04
   ```sh
@@ -63,9 +61,6 @@ Typically, a pycharm based project.
     cd MediaPipe-Project/Projects/P2-finger_counting
     python3 finger_counter.py
     ```
-  **Known Limitation:**
-  1. The algorithm currently works only for right hand.
-  
   **Compatibility**:
     - [X] Windows 10
     - [X] Ubuntu 20.04
