@@ -8,7 +8,7 @@ class PoseEstimation:
     def __init__(
             self,
             static_image_mode=False,
-            model_complexity=1,
+            model_complexity=2,
             smooth_landmarks=True,
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
@@ -78,4 +78,6 @@ def main(show_fps=False, video_src=0):
 
 
 if __name__ == "__main__":
-    main(show_fps=True)
+    video_list = ['pose1']
+    for video in video_list:
+        main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))
