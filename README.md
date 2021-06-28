@@ -36,6 +36,8 @@ Typically, a pycharm based project.
 
 ![HT](gallery/Output/ht.gif)
 
+![face](gallery/Output/face.gif)
+
 ## Projects
 
 * ### P1: Hand Gesture based system volume control
@@ -51,7 +53,8 @@ Typically, a pycharm based project.
     - [X] Windows 10
     - [X] Ubuntu 20.04
   
-    ![fc1](gallery/Output/VolC.gif) 
+    ![hc1](gallery/Output/VolC.gif)
+  
 * ### P2: Finger Counter
   **Objective:**  
 
