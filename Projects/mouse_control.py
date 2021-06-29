@@ -22,8 +22,12 @@ def main(show_fps=False, video_src=0):
     cap.set(4, screen_height)
 
     w_box, h_box = 640, 400
-    frame_offset = 150
+    width_offset = 150
+    height_offset = 50
+    # To reach to the corner of window
     pyautogui.FAILSAFE = False
+    smooth_fact = 3
+    pre_loc_x, pre_loc_y = 0, 0
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # Read the frame
@@ -46,17 +50,30 @@ def main(show_fps=False, video_src=0):
         finger_up_dict = track.is_finger_up(flip_image, hand_id_list=[0])
         finger_up = finger_up_dict['0']
         # if index is up
-        pt1_x, pt1_y = (w - frame_offset, 0)
-        pt2_x, pt2_y = (w - (w_box + frame_offset), h_box)
+        pt1_x, pt1_y = (w - width_offset, height_offset)
+        pt2_x, pt2_y = (w - (w_box + width_offset), h_box + height_offset)
         cv2.rectangle(flip_image, (pt1_x, pt1_y), (pt2_x, pt2_y), (255, 0, 255), 2)
         if len(finger_up):
             landmarks = finger_up_dict['lms']
-            if finger_up[0] and sum(finger_up) == 1:
+            # Cursor Move
+            if finger_up[1] and sum(finger_up) == 1:
                 finger_pos = landmarks['0'][8][:2]
-                abs_x = round(np.interp(finger_pos[0] - pt2_x, [0.0, 640], [0.0, 1.0]), 2)
-                abs_y = round(np.interp(finger_pos[1] - pt1_y, [0.0, 400], [0.0, 1.0]), 2)
-                pyautogui.moveTo(screen_width * abs_x, screen_height * abs_y)
-
+                abs_x = round(np.interp(finger_pos[0] - pt2_x, [0.0, 640], [0.0, screen_width]), 2)
+                abs_y = round(np.interp(finger_pos[1] - pt1_y, [0.0, 400], [0.0, screen_height]), 2)
+                cur_loc_x = pre_loc_x + (abs_x - pre_loc_x) / smooth_fact
+                cur_loc_y = pre_loc_y + (abs_y - pre_loc_y) / smooth_fact
+                pyautogui.moveTo(cur_loc_x, cur_loc_y)
+                pre_loc_x, pre_loc_y = cur_loc_x, cur_loc_y
+            # Left Click
+            if finger_up[1] and finger_up[2] and sum(finger_up) == 2:
+                tip_distance = ht.vector_distance(8, 12, landmarks['0'])
+                if tip_distance < 50:
+                    pyautogui.leftClick()
+            # Right Click
+            if finger_up[1] and finger_up[2] and finger_up[3] and sum(finger_up) == 3:
+                tip_distance = ht.vector_distance(8, 12, landmarks['0']) + ht.vector_distance(16, 12, landmarks['0'])
+                if tip_distance < 130:
+                    pyautogui.rightClick()
         # Calculate FPS
         if show_fps:
             current_time = time.time()

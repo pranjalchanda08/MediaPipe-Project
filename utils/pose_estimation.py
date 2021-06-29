@@ -42,12 +42,13 @@ class PoseEstimation:
 
     def find_lms(self, img_bgr):
         if self.results.pose_landmarks:
-            self.mpDraw.draw_landmarks(img_bgr, self.results.pose_landmarks)
+            self.mpDraw.draw_landmarks(img_bgr, self.results.pose_landmarks, self.mp_pose.POSE_CONNECTIONS)
 
 
 def main(show_fps=False, video_src=0):
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
+    body_lms = PoseEstimation()
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         success, img = cap.read()
         if not success:
@@ -56,7 +57,6 @@ def main(show_fps=False, video_src=0):
         # Flip input image horizontally
         flip_image = cv2.flip(img, 1)
 
-        body_lms = PoseEstimation()
         body_lms.find_body(flip_image)
         body_lms.find_lms(flip_image)
         if show_fps:
@@ -79,4 +79,4 @@ def main(show_fps=False, video_src=0):
 if __name__ == "__main__":
     video_list = ['pose1']
     for video in video_list:
-        main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))
+        main(show_fps=True, video_src= "../gallery/Inputs/Video/{}.mp4".format(video))

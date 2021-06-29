@@ -1,4 +1,5 @@
 try:
+    import math
     import cv2
     import time
     import mediapipe as mp
@@ -7,6 +8,13 @@ except ModuleNotFoundError:
 
     print("Required modules to be installed")
     sys.exit(-1)
+
+
+def vector_distance(pt1, pt2, lms):
+    x_pt1, y_pt1 = lms[pt1][:2]
+    x_pt2, y_pt2 = lms[pt2][:2]
+
+    return int(math.hypot((x_pt1 - x_pt2), (y_pt1 - y_pt2)))
 
 
 class HandTracking:
