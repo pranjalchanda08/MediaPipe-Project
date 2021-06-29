@@ -49,17 +49,17 @@ def main(show_fps=False, video_src=0):
         # Get all Landmarks
         finger_up_dict = track.is_finger_up(flip_image, hand_id_list=[0])
         finger_up = finger_up_dict['0']
-        # if index is up
         pt1_x, pt1_y = (w - width_offset, height_offset)
         pt2_x, pt2_y = (w - (w_box + width_offset), h_box + height_offset)
-        cv2.rectangle(flip_image, (pt1_x, pt1_y), (pt2_x, pt2_y), (255, 0, 255), 2)
+        # if index is up
         if len(finger_up):
             landmarks = finger_up_dict['lms']
             # Cursor Move
             if finger_up[1] and sum(finger_up) == 1:
                 finger_pos = landmarks['0'][8][:2]
-                abs_x = round(np.interp(finger_pos[0] - pt2_x, [0.0, 640], [0.0, screen_width]), 2)
-                abs_y = round(np.interp(finger_pos[1] - pt1_y, [0.0, 400], [0.0, screen_height]), 2)
+                cv2.rectangle(flip_image, (pt1_x, pt1_y), (pt2_x, pt2_y), (255, 0, 255), 2)
+                abs_x = round(np.interp(finger_pos[0] - pt2_x, [0.0, w_box], [0.0, screen_width]), 2)
+                abs_y = round(np.interp(finger_pos[1] - pt1_y, [0.0, h_box], [0.0, screen_height]), 2)
                 cur_loc_x = pre_loc_x + (abs_x - pre_loc_x) / smooth_fact
                 cur_loc_y = pre_loc_y + (abs_y - pre_loc_y) / smooth_fact
                 pyautogui.moveTo(cur_loc_x, cur_loc_y)

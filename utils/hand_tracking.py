@@ -81,7 +81,6 @@ class HandTracking:
                     self.LM_DICT['RING_TIP'],
                     self.LM_DICT['PINKY_TIP']
                 ]
-            cx, cy = None, None
             return_dict = {str(hand_id): [] for hand_id in hand_id_list}
             if finger_list is not None:
                 finger_points = [self.LM_DICT[(finger.upper() + '_TIP')] for finger in finger_list]
@@ -158,10 +157,11 @@ class HandTracking:
             finger_tip_list = [8, 12, 16, 20]
             lms_dict = self.find_all_landmarks(img_bgr, hand_id_list)
             ret_dict = {lms: [] for lms in lms_dict.keys()}
-            hand_orientation = True
             for lms in lms_dict.keys():
                 if lms_dict[lms][17][0] > lms_dict[lms][5][0]:
                     hand_orientation = False
+                else:
+                    hand_orientation = True
                 ret_dict[lms] = []
                 thumb = lms_dict[lms][4][0] > lms_dict[lms][3][0] if hand_orientation else \
                     lms_dict[lms][4][0] < lms_dict[lms][3][0]

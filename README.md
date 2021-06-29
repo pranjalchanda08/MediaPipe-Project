@@ -90,3 +90,4 @@ A set of project using OpenCV and Media Pipe library.
 * [OpenCV](https://pypi.org/project/opencv-python/)
 * [pycaw](https://github.com/AndreMiras/pycaw)
 * [alsaaudio](https://pypi.org/project/pyalsaaudio/)
+* [pyautogui](https://pypi.org/project/pyautogui/)
