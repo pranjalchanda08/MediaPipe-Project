@@ -44,7 +44,7 @@ A set of project using OpenCV and Media Pipe library.
     Real time volume control using hand gesture. The volume of the system shall be controlled only when middle, ring and
   pinky fingers are closed.
     ```shell
-    cd MediaPipe-Project/Projects/P1-vol_control
+    cd MediaPipe-Project/Projects/
     python3 vol_control.py
     ```
   **Compatibility**:
@@ -58,7 +58,7 @@ A set of project using OpenCV and Media Pipe library.
 
   Real time finger counting.
     ```shell
-    cd MediaPipe-Project/Projects/P2-finger_counting
+    cd MediaPipe-Project/Projects/
     python3 finger_counter.py
     ```
   **Compatibility**:
@@ -66,6 +66,22 @@ A set of project using OpenCV and Media Pipe library.
     - [X] Ubuntu 20.04
   
     ![fc1](gallery/Output/FC.gif) 
+* ### P3: Finger Mouse control
+  **Objective:**  
+
+  To control mouse pointer using finger tracking. 
+  1. Use Index finger only to move the cursor
+  2. Use Index and Middle fingers to do left-click
+  3. Use Index, Middle and Ring to do right-click
+  4. Perform step-ii twice fast for double click
+  
+    ```shell
+    cd MediaPipe-Project/Projects/
+    python3 mouse_control.py
+    ```
+  **Compatibility**:
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
   
 
 ## Reference

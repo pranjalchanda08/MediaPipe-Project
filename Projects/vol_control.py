@@ -87,7 +87,6 @@ def main(show_fps=False, video_src=0):
             # Draw line between Thumb and Index tip
             cv2.line(flip_image, (x_thumb_tip, y_thumb_tip), (x_index_tip, y_index_tip), (0, 0, 255), 3)
             # Get vector lengths between landmarks
-            # dis_thumb_index = vector_len((x_thumb_tip, y_thumb_tip), (x_index_tip, y_index_tip))
             dis_thumb_index = ht.vector_distance(track.LM_DICT['THUMB_TIP'], track.LM_DICT['INDEX_TIP'], lms_list)
             # Check if the volume control is triggered
             trigger = sum([lms_list[finger][1] < lms_list[finger - 1][1] for finger in tip_list])

@@ -37,7 +37,7 @@ def main(show_fps=False, video_src=0):
         h, w, c = flip_image.shape
         # Track and revert the image
         track.find_hand(flip_image)
-        pos_list_dict = track.find_finger_tips(
+        track.find_finger_tips(
             flip_image,
             finger_list=None,  # Add Finger string list else None
             show_connected=True,
@@ -45,7 +45,7 @@ def main(show_fps=False, video_src=0):
             draw_tips=False,
             hand_id_list=[0]
         )
-
+        mode = "Ideal"
         # Get all Landmarks
         finger_up_dict = track.is_finger_up(flip_image, hand_id_list=[0])
         finger_up = finger_up_dict['0']
@@ -64,16 +64,22 @@ def main(show_fps=False, video_src=0):
                 cur_loc_y = pre_loc_y + (abs_y - pre_loc_y) / smooth_fact
                 pyautogui.moveTo(cur_loc_x, cur_loc_y)
                 pre_loc_x, pre_loc_y = cur_loc_x, cur_loc_y
+                mode = "Move"
             # Left Click
-            if finger_up[1] and finger_up[2] and sum(finger_up) == 2:
+            elif finger_up[1] and finger_up[2] and sum(finger_up) == 2:
                 tip_distance = ht.vector_distance(8, 12, landmarks['0'])
                 if tip_distance < 50:
                     pyautogui.leftClick()
+                    mode = "Left Click"
             # Right Click
-            if finger_up[1] and finger_up[2] and finger_up[3] and sum(finger_up) == 3:
+            elif finger_up[1] and finger_up[2] and finger_up[3] and sum(finger_up) == 3:
                 tip_distance = ht.vector_distance(8, 12, landmarks['0']) + ht.vector_distance(16, 12, landmarks['0'])
                 if tip_distance < 130:
                     pyautogui.rightClick()
+                    mode = "Right Click"
+            else:
+                mode = "Ideal"
+        cv2.putText(flip_image, mode, (pt2_x + 10, pt2_y - 10), cv2.FONT_HERSHEY_SCRIPT_COMPLEX, 2, (255, 0, 255), 3)
         # Calculate FPS
         if show_fps:
             current_time = time.time()
@@ -95,4 +101,4 @@ def main(show_fps=False, video_src=0):
 
 
 if __name__ == "__main__":
-    main()
+    main(show_fps=True)
