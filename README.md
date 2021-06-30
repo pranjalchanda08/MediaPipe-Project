@@ -39,6 +39,8 @@ A set of project using OpenCV and Media Pipe library.
 ![face](gallery/Output/face.gif)
 ###Face Landmarks:
 ![faceMesh](gallery/Output/face_mesh.gif)
+###Pose Estimation:
+![Pose](gallery/Output/pose_est.gif)
 
 ## Projects
 
