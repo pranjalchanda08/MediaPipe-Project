@@ -24,7 +24,7 @@ class PoseEstimation:
         # Load pose model from media-pipe
         self.mp_pose = mp.solutions.pose
         # Load media-pipe drawing utility
-        self.mpDraw = mp.solutions.drawing_utils
+        self.mp_draw = mp.solutions.drawing_utils
         # Create pose landmark object
         self.pose = self.mp_pose.Pose(
             static_image_mode,
@@ -33,6 +33,9 @@ class PoseEstimation:
             min_detection_confidence,
             min_tracking_confidence
         )
+        self.drawing_spec = self.mp_draw.DrawingSpec(thickness=1,
+                                                     circle_radius=1,
+                                                     color=mp.solutions.drawing_utils.BLUE_COLOR)
 
     def find_body(self, img_bgr):
         # Convert the image to RGB
@@ -42,7 +45,10 @@ class PoseEstimation:
 
     def find_lms(self, img_bgr):
         if self.results.pose_landmarks:
-            self.mpDraw.draw_landmarks(img_bgr, self.results.pose_landmarks, self.mp_pose.POSE_CONNECTIONS)
+            self.mp_draw.draw_landmarks(img_bgr,
+                                        self.results.pose_landmarks,
+                                        self.mp_pose.POSE_CONNECTIONS,
+                                        self.drawing_spec)
 
 
 def main(show_fps=False, video_src=0):
@@ -79,4 +85,4 @@ def main(show_fps=False, video_src=0):
 if __name__ == "__main__":
     video_list = ['pose1']
     for video in video_list:
-        main(show_fps=True, video_src= "../gallery/Inputs/Video/{}.mp4".format(video))
+        main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))

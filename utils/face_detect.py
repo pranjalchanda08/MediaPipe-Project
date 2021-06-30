@@ -16,7 +16,7 @@ class FaceDetect:
         # Load face detection module
         self.mp_face = mp.solutions.face_detection
         # Load media-pipe drawing utility
-        self.mpDraw = mp.solutions.drawing_utils
+        self.mp_draw = mp.solutions.drawing_utils
         # Load Face detection model
         self.face = self.mp_face.FaceDetection(min_detection_confidence=min_detection_confidence,
                                                model_selection=model_selection)
@@ -36,7 +36,7 @@ class FaceDetect:
                     h, w, c = img_bgr.shape
                     cord_list.append((int(w * key_point.x), int(h * key_point.y)))
                 if draw:
-                    self.mpDraw.draw_detection(img_bgr, detection)
+                    self.mp_draw.draw_detection(img_bgr, detection)
                 ret_dict['keyPoints'].append(cord_list)
         return ret_dict
 

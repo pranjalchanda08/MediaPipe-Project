@@ -30,6 +30,7 @@ A set of project using OpenCV and Media Pipe library.
 
 - [X] Hand Tracking
 - [X] Face Detection
+- [X] Face Mesh
 - [X] Pose Estimation
 
 ![HT](gallery/Output/ht.gif)
