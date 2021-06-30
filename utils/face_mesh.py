@@ -56,7 +56,7 @@ class FaceMesh:
         return ret_list
 
 
-def main(show_fps=False, video_src=0):
+def main(show_fps=False, video_src: str = 0):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0

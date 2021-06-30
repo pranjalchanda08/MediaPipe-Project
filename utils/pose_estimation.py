@@ -51,7 +51,7 @@ class PoseEstimation:
                                         self.drawing_spec)
 
 
-def main(show_fps=False, video_src=0):
+def main(show_fps=False, video_src: str = 0):
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
     body_lms = PoseEstimation()
