@@ -33,9 +33,12 @@ class PoseEstimation:
             min_detection_confidence,
             min_tracking_confidence
         )
-        self.drawing_spec = self.mp_draw.DrawingSpec(thickness=1,
+        self.drawing_spec = self.mp_draw.DrawingSpec(thickness=2,
                                                      circle_radius=1,
                                                      color=mp.solutions.drawing_utils.BLUE_COLOR)
+        self.connect_spec = self.mp_draw.DrawingSpec(thickness=1,
+                                                     circle_radius=1,
+                                                     color=(255, 255, 255))
 
     def find_body(self, img_bgr):
         # Convert the image to RGB
@@ -48,7 +51,8 @@ class PoseEstimation:
             self.mp_draw.draw_landmarks(img_bgr,
                                         self.results.pose_landmarks,
                                         self.mp_pose.POSE_CONNECTIONS,
-                                        self.drawing_spec)
+                                        self.drawing_spec,
+                                        self.connect_spec)
 
 
 def main(show_fps=False, video_src: str = 0):
