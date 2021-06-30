@@ -33,13 +33,17 @@ A set of project using OpenCV and Media Pipe library.
 - [X] Face Mesh
 - [X] Pose Estimation
 
-###Hand Landmark:
+### Hand Landmark:
+
 ![HT](gallery/Output/ht.gif)
-###Face Detection:
+### Face Detection:
+
 ![face](gallery/Output/face.gif)
-###Face Landmarks:
+### Face Mesh:
+
 ![faceMesh](gallery/Output/face_mesh.gif)
-###Pose Estimation:
+### Pose Estimation:
+
 ![Pose](gallery/Output/pose_est.gif)
 
 ## Projects
