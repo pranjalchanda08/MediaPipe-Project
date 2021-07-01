@@ -54,7 +54,6 @@ A set of project using OpenCV and Media Pipe library.
     Real time volume control using hand gesture. The volume of the system shall be controlled only when middle, ring and
   pinky fingers are closed.
     ```shell
-    cd MediaPipe-Project/Projects/
     python3 vol_control.py
     ```
   **Compatibility**:
@@ -68,7 +67,6 @@ A set of project using OpenCV and Media Pipe library.
 
   Real time finger counting.
     ```shell
-    cd MediaPipe-Project/Projects/
     python3 finger_counter.py
     ```
   **Compatibility**:
@@ -86,7 +84,6 @@ A set of project using OpenCV and Media Pipe library.
   4. Perform step-ii twice fast for double click
   
     ```shell
-    cd MediaPipe-Project/Projects/
     python3 mouse_control.py
     ```
   **Compatibility**:
