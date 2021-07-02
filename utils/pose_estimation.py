@@ -1,6 +1,12 @@
-import time
-import cv2
-import mediapipe as mp
+try:
+    import cv2
+    import time
+    import mediapipe as mp
+except ModuleNotFoundError:
+    import sys
+
+    print("Required modules to be installed")
+    sys.exit(-1)
 
 
 class PoseEstimation:

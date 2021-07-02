@@ -36,12 +36,15 @@ A set of project using OpenCV and Media Pipe library.
 ### Hand Landmark:
 
 ![HT](gallery/Output/ht.gif)
+
 ### Face Detection:
 
 ![face](gallery/Output/face.gif)
+
 ### Face Mesh:
 
 ![faceMesh](gallery/Output/face_mesh.gif)
+
 ### Pose Estimation:
 
 ![Pose](gallery/Output/pose_est.gif)
@@ -50,8 +53,8 @@ A set of project using OpenCV and Media Pipe library.
 
 * ### P1: Hand Gesture based system volume control
   **Objective:**
-  
-    Real time volume control using hand gesture. The volume of the system shall be controlled only when middle, ring and
+
+  Real time volume control using hand gesture. The volume of the system shall be controlled only when middle, ring and
   pinky fingers are closed.
     ```shell
     python3 vol_control.py
@@ -59,11 +62,11 @@ A set of project using OpenCV and Media Pipe library.
   **Compatibility**:
     - [X] Windows 10
     - [X] Ubuntu 20.04
-  
-    ![hc1](gallery/Output/VolC.gif)
-  
+
+  ![hc1](gallery/Output/VolC.gif)
+
 * ### P2: Finger Counter
-  **Objective:**  
+  **Objective:**
 
   Real time finger counting.
     ```shell
@@ -72,24 +75,23 @@ A set of project using OpenCV and Media Pipe library.
   **Compatibility**:
     - [X] Windows 10
     - [X] Ubuntu 20.04
-  
-    ![fc1](gallery/Output/FC.gif) 
-* ### P3: Finger Mouse control
-  **Objective:**  
 
-  To control mouse pointer using finger tracking. 
-  1. Use Index finger only to move the cursor
-  2. Use Index and Middle fingers to do left-click
-  3. Use Index, Middle and Ring to do right-click
-  4. Perform step-ii twice fast for double click
-  
+  ![fc1](gallery/Output/FC.gif)
+* ### P3: Finger Mouse control
+  **Objective:**
+
+  To control mouse pointer using finger tracking.
+    1. Use Index finger only to move the cursor
+    2. Use Index and Middle fingers to do left-click
+    3. Use Index, Middle and Ring to do right-click
+    4. Perform step-ii twice fast for double click
+
     ```shell
     python3 mouse_control.py
     ```
   **Compatibility**:
     - [X] Windows 10
     - [X] Ubuntu 20.04
-  
 
 ## Reference
 
