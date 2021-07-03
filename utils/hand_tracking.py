@@ -67,7 +67,7 @@ class HandTracking:
                          show_landmarks=False,
                          draw_tips=True,
                          finger_list=None,
-                         hand_id_list=0
+                         hand_id_list: list = 0
                          ):
         """
             Finds finger tips location on cv2.BGR image
@@ -146,7 +146,8 @@ class HandTracking:
 
     def is_finger_up(self,
                      img_bgr,
-                     hand_id_list=[0]
+                     hand_id_list=[0],
+                     threshold=3
                      ):
         try:
             finger_tip_list = [8, 12, 16, 20]
@@ -162,7 +163,7 @@ class HandTracking:
                     lms_dict[lms][4][0] < lms_dict[lms][3][0]
                 ret_dict[lms].append(thumb)
                 for finger_tip in finger_tip_list:
-                    ret_dict[lms].append(lms_dict[lms][finger_tip][1] < lms_dict[lms][finger_tip - 3][1])
+                    ret_dict[lms].append(lms_dict[lms][finger_tip][1] < lms_dict[lms][finger_tip - threshold][1])
             ret_dict['lms'] = lms_dict
             return ret_dict
         except IndexError:
