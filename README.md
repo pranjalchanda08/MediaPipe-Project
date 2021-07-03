@@ -92,7 +92,21 @@ A set of project using OpenCV and Media Pipe library.
   **Compatibility**:
     - [X] Windows 10
     - [X] Ubuntu 20.04
+  
+* ### P4: Finger Virtual Painter
+  **Objective:**
 
+  To Paint on the screen using finger gestures.
+    1. Use 👆 Draw
+    2. Use 🤚 Erase
+    3. Make a 🤟 to clear the screen
+
+    ```shell
+    python3 finger_painter.py
+    ```
+  **Compatibility**:
+    - [X] Windows 10
+    - [ ] Ubuntu 20.04
 ## Reference
 
 * [Mediapipe](https://google.github.io/mediapipe/)
