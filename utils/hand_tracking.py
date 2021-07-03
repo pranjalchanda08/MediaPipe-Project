@@ -116,20 +116,15 @@ class HandTracking:
     def find_all_landmarks(
             self,
             img_bgr,
-            hand_id_list=0,
-            finger_list=None
+            hand_id_list=0
     ):
         """
         :param img_bgr:
         :param hand_id_list:
-        :param finger_list:
         :return:
         """
         try:
-            cx, cy = None, None
             return_dict = {str(hand_id): [] for hand_id in hand_id_list}
-            if finger_list is not None:
-                finger_points = [self.LM_DICT[(finger.upper() + '_TIP')] for finger in finger_list]
 
             if self.results.multi_hand_landmarks:
                 # Iterate over all hands
