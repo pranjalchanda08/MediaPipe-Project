@@ -86,7 +86,6 @@ A set of project using OpenCV and Media Pipe library.
     3. Use Index, Middle and Ring to do right-click
     4. Perform step-ii twice fast for double click
 
-
     ```shell
     python3 mouse_control.py
     ```
@@ -101,7 +100,6 @@ A set of project using OpenCV and Media Pipe library.
     1. Use 👆 to Draw
     2. Use 🤚 to Erase
     3. Make a 🤟 to clear the screen
-
 
     ```shell
     python3 finger_painter.py

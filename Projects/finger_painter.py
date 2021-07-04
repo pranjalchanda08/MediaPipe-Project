@@ -1,8 +1,7 @@
-import numpy as np
-
 try:
     import sys
     from cv2 import cv2
+    import numpy as np
     import time
     import math
     import utils.hand_tracking as ht
