@@ -32,6 +32,7 @@ A set of project using OpenCV and Media Pipe library.
 - [X] Face Detection
 - [X] Face Mesh
 - [X] Pose Estimation
+- [ ] Objectron (3D Object Detection)
 
 ### Hand Landmark:
 

@@ -5,63 +5,63 @@ try:
 except ModuleNotFoundError:
     print("Install required packages")
 
+SHOE = 'Shoe'
+CHAIR = 'Chair'
+CUP = 'Cup'
+CAMERA = 'Camera'
 
-class FaceMesh:
+
+class Objectron:
     def __init__(self,
-                 static_image_mode=False,
-                 max_num_faces=1,
+                 static_image_mode=True,
+                 max_num_objects=5,
                  min_detection_confidence=0.5,
-                 min_tracking_confidence=0.5
+                 model_name: str = SHOE
                  ):
-        self.ctr = 0
-        self.results = None
-        # Load face detection module
-        self.mp_face = mp.solutions.face_mesh
-        # Load media-pipe drawing utility
+        self.result = None
         self.mp_draw = mp.solutions.drawing_utils
-        # Load Face detection model
-        self.face = self.mp_face.FaceMesh(static_image_mode,
-                                          max_num_faces,
-                                          min_detection_confidence,
-                                          min_tracking_confidence
-                                          )
-        self.drawing_spec = self.mp_draw.DrawingSpec(thickness=1,
+        self.mp_obj = mp.solutions.objectron
+        self.object = self.mp_obj.Objectron(
+            static_image_mode=static_image_mode,
+            max_num_objects=max_num_objects,
+            min_detection_confidence=min_detection_confidence,
+            model_name=model_name
+        )
+        self.drawing_spec = self.mp_draw.DrawingSpec(thickness=2,
                                                      circle_radius=1,
                                                      color=mp.solutions.drawing_utils.BLUE_COLOR)
-        self.connect_spec = self.mp_draw.DrawingSpec(thickness=1,
+        self.connect_spec = self.mp_draw.DrawingSpec(thickness=2,
                                                      circle_radius=1,
-                                                     color=mp.solutions.drawing_utils.BLACK_COLOR)
+                                                     color=(0, 255, 255))
 
-    def find_face(self, img_bgr):
-        # Convert image to RGB
-        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-        # get Process results
-        self.results = self.face.process(img_rgb)
+    def find_object(self, img_bgr):
+        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_RGB2BGR)
+        self.result = self.object.process(img_rgb)
 
-    def find_face_landmarks(self, img_bgr, draw: bool = True):
+    def get_landmarks(self, img_bgr, draw: bool = True):
         ret_list = []
-        if self.results.multi_face_landmarks:
+        if self.result.detect_objects:
             h, w, c = img_bgr.shape
-            for face_landmarks in self.results.multi_face_landmarks:
-                for idx, landmark in enumerate(face_landmarks.landmark):
+            for detected_object in self.result.detected_objects:
+                for idx, landmark in enumerate(detected_object.landmarks_2d.landmark):
                     cx, cy = int(landmark.x * w), int(landmark.y * h)
                     ret_list.append((cx, cy))
                 if draw:
                     self.mp_draw.draw_landmarks(
                         image=img_bgr,
-                        landmark_list=face_landmarks,
-                        connections=self.mp_face.FACE_CONNECTIONS,
+                        landmark_list=detected_object.landmarks_2d,
+                        connections=self.object.BOX_CONNECTIONS,
                         landmark_drawing_spec=self.drawing_spec,
                         connection_drawing_spec=self.connect_spec
                     )
         return ret_list
 
 
-def main(show_fps=False, video_src: str = 0):
+def main(show_fps=False, video_src: str = 0, flip: bool = False):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
-    detect = FaceMesh()
+    detect = Objectron()
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(20) != (ord('q') or ord('Q')):
         # Read the frame
@@ -69,9 +69,11 @@ def main(show_fps=False, video_src: str = 0):
         if not success:
             break
         # Flip input image horizontally
-        flip_image = cv2.flip(img, 1)
-        detect.find_face(flip_image)
-        ret = detect.find_face_landmarks(flip_image)
+        flip_image = img
+        if flip:
+            flip_image = cv2.flip(img, 1)
+        detect.find_object(flip_image)
+        ret = detect.get_landmarks(flip_image)
         print(ret)
         # Calculate FPS
         if show_fps:
