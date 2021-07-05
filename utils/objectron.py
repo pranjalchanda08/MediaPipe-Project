@@ -32,7 +32,7 @@ class Objectron:
                                                      color=mp.solutions.drawing_utils.BLUE_COLOR)
         self.connect_spec = self.mp_draw.DrawingSpec(thickness=2,
                                                      circle_radius=1,
-                                                     color=(0, 255, 255))
+                                                     color=(255, 255, 255))
 
     def find_object(self, img_bgr):
         img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_RGB2BGR)
@@ -40,7 +40,7 @@ class Objectron:
 
     def get_landmarks(self, img_bgr, draw: bool = True):
         ret_list = []
-        if self.result.detect_objects:
+        if self.result.detected_objects:
             h, w, c = img_bgr.shape
             for detected_object in self.result.detected_objects:
                 for idx, landmark in enumerate(detected_object.landmarks_2d.landmark):
@@ -50,7 +50,7 @@ class Objectron:
                     self.mp_draw.draw_landmarks(
                         image=img_bgr,
                         landmark_list=detected_object.landmarks_2d,
-                        connections=self.object.BOX_CONNECTIONS,
+                        connections=self.mp_obj.BOX_CONNECTIONS,
                         landmark_drawing_spec=self.drawing_spec,
                         connection_drawing_spec=self.connect_spec
                     )
@@ -96,6 +96,6 @@ def main(show_fps=False, video_src: str = 0, flip: bool = False):
 
 
 if __name__ == "__main__":
-    video_list = ['face1']
+    video_list = ['shoe1', 'shoe2']
     for video in video_list:
         main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))
