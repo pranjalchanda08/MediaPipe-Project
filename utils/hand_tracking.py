@@ -170,7 +170,7 @@ class HandTracking:
             return ret_dict
 
 
-def main(show_fps=False, video_src: str = 0):
+def main(show_fps=False, video_src: str = 0, flip: bool = False):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
@@ -186,7 +186,7 @@ def main(show_fps=False, video_src: str = 0):
         if not success:
             break
         # Flip input image horizontally
-        flip_image = cv2.flip(img, 1)
+        flip_image = cv2.flip(img, 1) if flip else img
 
         # Track and revert the image
         track.find_hand(flip_image)
@@ -200,10 +200,9 @@ def main(show_fps=False, video_src: str = 0):
         )
         pos_list_dict = track.find_all_landmarks(
             flip_image,
-            hand_id_list=[0, 1],
-            finger_list=None
+            hand_id_list=[0, 1]
         )
-        # print(pos_list_dict)
+        print(pos_list_dict)
         # Calculate FPS
         if show_fps:
             current_time = time.time()

@@ -41,7 +41,7 @@ class FaceDetect:
         return ret_dict
 
 
-def main(show_fps=False, video_src: str = 0):
+def main(show_fps=False, video_src: str = 0, flip: bool = False):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
@@ -53,7 +53,7 @@ def main(show_fps=False, video_src: str = 0):
         if not success:
             break
         # Flip input image horizontally
-        flip_image = cv2.flip(img, 1)
+        flip_image = cv2.flip(img, 1) if flip else img
         detect.detect_faces(flip_image)
         ret = detect.get_lms(flip_image, draw=True)
         print(ret)

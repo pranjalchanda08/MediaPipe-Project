@@ -63,15 +63,13 @@ def main(show_fps=False, video_src: str = 0, flip: bool = False):
     previous_time = 0
     detect = Objectron()
     # Infinite loop waiting for key 'q' to terminate
-    while cv2.waitKey(20) != (ord('q') or ord('Q')):
+    while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # Read the frame
         success, img = cap.read()
         if not success:
             break
         # Flip input image horizontally
-        flip_image = img
-        if flip:
-            flip_image = cv2.flip(img, 1)
+        flip_image = cv2.flip(img, 1) if flip else img
         detect.find_object(flip_image)
         ret = detect.get_landmarks(flip_image)
         print(ret)

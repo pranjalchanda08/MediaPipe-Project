@@ -68,12 +68,9 @@ def main(show_fps=False, video_src: str = 0, flip=False):
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         success, img = cap.read()
         if not success:
-            print("read_err")
             break
         # Flip input image horizontally
-        flip_image = img
-        if flip:
-            flip_image = cv2.flip(img, 1)
+        flip_image = cv2.flip(img, 1) if flip else img
         body_lms.find_body(flip_image)
         body_lms.find_lms(flip_image)
         if show_fps:
