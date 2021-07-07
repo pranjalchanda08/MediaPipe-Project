@@ -108,6 +108,9 @@ A set of project using OpenCV and Media Pipe library.
   **Compatibility**:
     - [X] Windows 10
     - [ ] Ubuntu 20.04
+
+## Known issues:
+1. Segmentation Fault due to keypress in OpenCV when using with Ubuntu 20.04. [OpenCV Github Issue #20311](https://github.com/opencv/opencv/issues/20311)
 ## Reference
 
 * [Mediapipe](https://google.github.io/mediapipe/)
