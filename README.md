@@ -32,7 +32,7 @@ A set of project using OpenCV and Media Pipe library.
 - [X] Face Detection
 - [X] Face Mesh
 - [X] Pose Estimation
-- [ ] Objectron (3D Object Detection)
+- [X] Objectron (3D Object Detection)
 
 ### Hand Landmark:
 
@@ -50,6 +50,9 @@ A set of project using OpenCV and Media Pipe library.
 
 ![Pose](gallery/Output/pose_est.gif)
 
+### Objectron:
+
+![Pose](gallery/Output/obj.gif)
 ## Projects
 
 * ### P1: Hand Gesture based system volume control
