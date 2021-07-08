@@ -57,11 +57,11 @@ class Objectron:
         return ret_list
 
 
-def main(show_fps=False, video_src: str = 0, flip: bool = False):
+def main(show_fps=False, video_src: str = 0, flip: bool = False, model_name: str = SHOE):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     previous_time = 0
-    detect = Objectron()
+    detect = Objectron(model_name=model_name)
     # Infinite loop waiting for key 'q' to terminate
     while cv2.waitKey(1) != (ord('q') or ord('Q')):
         # Read the frame
@@ -97,3 +97,6 @@ if __name__ == "__main__":
     video_list = ['shoe1', 'shoe2']
     for video in video_list:
         main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video))
+    video_list = ['cup1', 'cup2']
+    for video in video_list:
+        main(show_fps=True, video_src="../gallery/Inputs/Video/{}.mp4".format(video), model_name=CUP)
