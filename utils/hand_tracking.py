@@ -116,6 +116,8 @@ class HandTracking:
     def find_all_landmarks(
             self,
             img_bgr,
+            show_connected=False,
+            show_landmarks=False,
             hand_id_list=0
     ):
         """
@@ -139,6 +141,12 @@ class HandTracking:
                         # Check if the landmark is present in the index list
                         # Append the x,y coordinates  of the landmark
                         return_dict[str(hand_id)].append((cx, cy, lm.z))
+                        if show_landmarks:
+                            self.mpDraw.draw_landmarks(
+                                img_bgr,
+                                hand_landmarks,
+                                self.mpHand.HAND_CONNECTIONS if show_connected else None
+                            )
         except Exception:
             pass
         finally:
@@ -168,6 +176,24 @@ class HandTracking:
             return ret_dict
         except IndexError:
             return ret_dict
+
+    def find_raw_landmarks(self, hand_id_list=[0]):
+        try:
+            return_dict = {str(hand_id): [] for hand_id in hand_id_list}
+
+            if self.results.multi_hand_landmarks:
+                # Iterate over all hands
+                for hand_id in hand_id_list:
+                    return_dict[str(hand_id)] = []
+                    hand_landmarks = self.results.multi_hand_landmarks[hand_id]
+                    # print(hand_landmarks)
+                    for index_, lm in enumerate(hand_landmarks.landmark):
+                        cx, cy, cz = (round(lm.x, 4)), (round(lm.y, 4)), (round(lm.z, 4))
+                        return_dict[str(hand_id)].append((cx, cy, cz))
+        except Exception:
+            pass
+        finally:
+            return return_dict
 
 
 def main(show_fps=False, video_src: str = 0, flip: bool = False):
