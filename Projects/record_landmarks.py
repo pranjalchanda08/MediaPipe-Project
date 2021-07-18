@@ -11,6 +11,14 @@ finally:
     import utils.hand_tracking as ht
 
 
+def flatten(landmarks):
+    flat = []
+    for lms in landmarks:
+        for point in lms:
+            flat.append(point)
+    return flat
+
+
 def main(show_fps=False,
          video_src=0,
          flip: bool = True,
@@ -25,12 +33,13 @@ def main(show_fps=False,
     track = ht.HandTracking(min_detection_confidence=0.8,
                             min_tracking_confidence=0.8)
     is_record = True
-    labels = []
-    csv_dict = {'labels': labels}
-    for index in range(0, 21):
-        csv_dict[(str(index) + '_x')] = []
-        csv_dict[(str(index) + '_y')] = []
-        csv_dict[(str(index) + '_z')] = []
+    columns = []
+    for i in range(0, 21):
+        for x in ['_x', '_y', '_z']:
+            columns.append((str(i) + x))
+    columns.append('labels')
+    print(columns)
+    array_entry = []
     while is_record:
         temp = sample_per_label
         label = input("Enter Label: ")
@@ -41,7 +50,7 @@ def main(show_fps=False,
             success, img = cap.read()
             if not success:
                 continue
-            # # Flip input image horizontally
+            # Flip input image horizontally
             flip_image = cv2.flip(img, 1) if flip else img
 
             # Track and revert the image
@@ -52,31 +61,22 @@ def main(show_fps=False,
                                                       show_landmarks=True)
             if len(finger_up_dict['0']):
                 temp -= 1
-                labels.append(label)
-                for index, lms in enumerate(finger_up_dict['0']):
-                    csv_dict[(str(index) + '_x')].append(lms[0])
-                    csv_dict[(str(index) + '_y')].append(lms[1])
-                    csv_dict[(str(index) + '_z')].append(lms[2])
+                flat = flatten(finger_up_dict['0'])
+                flat.append(label)
+                array_entry.append(flat)
+
             # Calculate FPS
             if show_fps:
                 current_time = time.time()
                 fps = 1 / (current_time - previous_time)
                 previous_time = current_time
-                # Include FPS text in image
-                cv2.putText(flip_image,
-                            "FPS: {}".format(int(fps)),
-                            (10, 70),  # Position
-                            cv2.FONT_HERSHEY_PLAIN,
-                            1,  # Font size
-                            (0, 0, 255),
-                            2  # Thickness
-                            )
+                cv2.putText(flip_image, "FPS: {}".format(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 2)
             # Show the resultant image
             cv2.imshow("Output", flip_image)
         is_record = input("Do you want to record more? (y/n)")
         is_record = is_record.upper() == 'Y'
-    csv_opt = pd.DataFrame(csv_dict)
-    csv_opt.to_csv(csv_src, mode=write_mode)
+    data_frame = pd.DataFrame(array_entry, columns=columns)
+    data_frame.to_csv(csv_src, mode=write_mode)
     cap.release()
     cv2.destroyAllWindows()
 
