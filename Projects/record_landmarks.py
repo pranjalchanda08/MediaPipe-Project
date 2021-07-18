@@ -11,16 +11,12 @@ finally:
     import utils.hand_tracking as ht
 
 
-def pre_process(landmarks):
-    flatten = {}
-    for index, lms in enumerate(landmarks):
-        flatten[(str(index) + '_x')] = lms[0]
-        flatten[(str(index) + '_y')] = lms[1]
-        flatten[(str(index) + '_z')] = lms[2]
-    return flatten
-
-
-def main(show_fps=False, video_src=0, flip: bool = True, csv_src: str = 'record.csv', sample=100):
+def main(show_fps=False,
+         video_src=0,
+         flip: bool = True,
+         csv_src: str = 'record.csv',
+         write_mode='w',
+         sample_per_label=100):
     # Capture the video stream Webcam
     cap = cv2.VideoCapture(video_src)
     cap.set(3, 1280)
@@ -36,19 +32,24 @@ def main(show_fps=False, video_src=0, flip: bool = True, csv_src: str = 'record.
         csv_dict[(str(index) + '_y')] = []
         csv_dict[(str(index) + '_z')] = []
     while is_record:
-        temp = sample
+        temp = sample_per_label
         label = input("Enter Label: ")
 
         # Infinite loop waiting for key 'q' to terminate
         while cv2.waitKey(1) and temp > 0:
             # # Read the frame
             success, img = cap.read()
+            if not success:
+                continue
             # # Flip input image horizontally
             flip_image = cv2.flip(img, 1) if flip else img
 
             # Track and revert the image
             track.find_hand(flip_image)
-            finger_up_dict = track.find_raw_landmarks(hand_id_list=[0])
+            finger_up_dict = track.find_raw_landmarks(flip_image,
+                                                      hand_id_list=[0],
+                                                      show_connected=True,
+                                                      show_landmarks=True)
             if len(finger_up_dict['0']):
                 temp -= 1
                 labels.append(label)
@@ -72,13 +73,23 @@ def main(show_fps=False, video_src=0, flip: bool = True, csv_src: str = 'record.
                             )
             # Show the resultant image
             cv2.imshow("Output", flip_image)
-        cap.release()
-        cv2.destroyAllWindows()
-        is_record = input("Do you want to record? (y/n)")
+        is_record = input("Do you want to record more? (y/n)")
         is_record = is_record.upper() == 'Y'
     csv_opt = pd.DataFrame(csv_dict)
-    csv_opt.to_csv(csv_src)
+    csv_opt.to_csv(csv_src, mode=write_mode)
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
-    main(show_fps=True)
+    samples = int(input("Enter number of samples per label: "))
+    append = input("Wish to append previous records? (y/n) ")
+    append = 'a' if append.upper() == 'Y' else 'w'
+    main(
+        show_fps=True,
+        video_src=0,
+        flip=True,
+        csv_src='record.csv',
+        sample_per_label=samples,
+        write_mode=append
+    )

@@ -121,6 +121,8 @@ class HandTracking:
             hand_id_list=0
     ):
         """
+        :param show_connected:
+        :param show_landmarks:
         :param img_bgr:
         :param hand_id_list:
         :return:
@@ -177,7 +179,12 @@ class HandTracking:
         except IndexError:
             return ret_dict
 
-    def find_raw_landmarks(self, hand_id_list=[0]):
+    def find_raw_landmarks(self,
+                           img_bgr,
+                           hand_id_list=[0],
+                           show_connected=False,
+                           show_landmarks=False
+                           ):
         try:
             return_dict = {str(hand_id): [] for hand_id in hand_id_list}
 
@@ -190,6 +197,12 @@ class HandTracking:
                     for index_, lm in enumerate(hand_landmarks.landmark):
                         cx, cy, cz = (round(lm.x, 4)), (round(lm.y, 4)), (round(lm.z, 4))
                         return_dict[str(hand_id)].append((cx, cy, cz))
+                        if show_landmarks:
+                            self.mpDraw.draw_landmarks(
+                                img_bgr,
+                                hand_landmarks,
+                                self.mpHand.HAND_CONNECTIONS if show_connected else None
+                            )
         except Exception:
             pass
         finally:
