@@ -29,11 +29,11 @@ A set of project using OpenCV and Media Pipe library.
 
 ## Utilities
 
-- [X] Hand Tracking
-- [X] Face Detection
-- [X] Face Mesh
-- [X] Pose Estimation
-- [X] Objectron (3D Object Detection)
+- Hand Tracking
+- Face Detection
+- Face Mesh
+- Pose Estimation
+- Objectron (3D Object Detection)
 
 ### Hand Landmark:
 
@@ -65,8 +65,8 @@ A set of project using OpenCV and Media Pipe library.
     python3 vol_control.py
     ```
   **Compatibility**:
-    - [X] Windows 10
-    - [X] Ubuntu 20.04
+    - Windows 10
+    - Ubuntu 20.04
 
   ![hc1](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/VolC.gif?raw=true)
 
@@ -74,12 +74,13 @@ A set of project using OpenCV and Media Pipe library.
   **Objective:**
 
   Real time finger counting.
+    
     ```shell
-    python3 finger_counter.py
+    $ python3 finger_counter.py
     ```
   **Compatibility**:
-    - [X] Windows 10
-    - [X] Ubuntu 20.04
+    - Windows 10
+    - Ubuntu 20.04
 
   ![fc1](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/FC.gif?raw=true)
 * ### P3: Finger Mouse control
@@ -92,11 +93,11 @@ A set of project using OpenCV and Media Pipe library.
     4. Perform step-ii twice fast for double click
 
     ```shell
-    python3 mouse_control.py
+    $ python3 mouse_control.py
     ```
   **Compatibility**:
-    - [X] Windows 10
-    - [X] Ubuntu 20.04
+    - Windows 10
+    - Ubuntu 20.04
   
 * ### P4: Finger Virtual Painter
   **Objective:**
@@ -107,11 +108,11 @@ A set of project using OpenCV and Media Pipe library.
     3. Make a 🤟 to clear the screen
 
     ```shell
-    python3 finger_painter.py
+    $ python3 finger_painter.py
     ```
   **Compatibility**:
-    - [X] Windows 10
-    - [X] Ubuntu 20.04
+    - Windows 10
+    - Ubuntu 20.04
 
 ## Known issues:
 1. Segmentation Fault due to keypress in OpenCV when using with Ubuntu 20.04. [OpenCV Github Issue #20311](https://github.com/opencv/opencv/issues/20311)
