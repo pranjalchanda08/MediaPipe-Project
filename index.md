@@ -1,37 +1,123 @@
-## Welcome to GitHub Pages
+# Mediapipe Projects
 
-You can use the [editor on GitHub](https://github.com/pranjalchanda08/MediaPipe-Project/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+![python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+![opencv](https://img.shields.io/badge/OpenCV-27338e?style=for-the-badge&logo=OpenCV&logoColor=white)
+![numpy](https://img.shields.io/badge/Numpy-777BB4?style=for-the-badge&logo=numpy&logoColor=white)
+![TF](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=TensorFlow&logoColor=white)
+![Pcharm](https://img.shields.io/badge/PyCharm-000000.svg?&style=for-the-badge&logo=PyCharm&logoColor=white)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+A set of project using OpenCV and Media Pipe library.
 
-### Markdown
+## System Requirements
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+* Ubuntu 20.04
+* Python 3.8.5
+* **No GPU** requirements
 
-```markdown
-Syntax highlighted code block
+## Installation
 
-# Header 1
-## Header 2
-### Header 3
+* ### Ubuntu 20.04
+  ```sh
+  $ pip3 install -r requirements_linux.txt
+  ```
+* ### Windows 10
+  ```shell
+  /> pip3 install -r requirements_win.txt
+  ```  
 
-- Bulleted
-- List
+## Utilities
 
-1. Numbered
-2. List
+- [X] Hand Tracking
+- [X] Face Detection
+- [X] Face Mesh
+- [X] Pose Estimation
+- [X] Objectron (3D Object Detection)
 
-**Bold** and _Italic_ and `Code` text
+### Hand Landmark:
 
-[Link](url) and ![Image](src)
-```
+![HT](gallery/Output/ht.gif)
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Face Detection:
 
-### Jekyll Themes
+![face](gallery/Output/face.gif)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pranjalchanda08/MediaPipe-Project/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Face Mesh:
 
-### Support or Contact
+![faceMesh](gallery/Output/face_mesh.gif)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Pose Estimation:
+
+![Pose](gallery/Output/pose_est.gif)
+
+### Objectron:
+
+![Pose](gallery/Output/obj.gif)
+## Projects
+
+* ### P1: Hand Gesture based system volume control
+  **Objective:**
+
+  Real time volume control using hand gesture. The volume of the system shall be controlled only when middle, ring and
+  pinky fingers are closed.
+    ```shell
+    python3 vol_control.py
+    ```
+  **Compatibility**:
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
+
+  ![hc1](gallery/Output/VolC.gif)
+
+* ### P2: Finger Counter
+  **Objective:**
+
+  Real time finger counting.
+    ```shell
+    python3 finger_counter.py
+    ```
+  **Compatibility**:
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
+
+  ![fc1](gallery/Output/FC.gif)
+* ### P3: Finger Mouse control
+  **Objective:**
+
+  To control mouse pointer using finger tracking.
+    1. Use Index finger only to move the cursor
+    2. Use Index and Middle fingers to do left-click
+    3. Use Index, Middle and Ring to do right-click
+    4. Perform step-ii twice fast for double click
+
+    ```shell
+    python3 mouse_control.py
+    ```
+  **Compatibility**:
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
+  
+* ### P4: Finger Virtual Painter
+  **Objective:**
+
+  To Paint on the screen using finger gestures.
+    1. Use 👆 to Draw
+    2. Use 🤚 to Erase
+    3. Make a 🤟 to clear the screen
+
+    ```shell
+    python3 finger_painter.py
+    ```
+  **Compatibility**:
+    - [X] Windows 10
+    - [X] Ubuntu 20.04
+
+## Known issues:
+1. Segmentation Fault due to keypress in OpenCV when using with Ubuntu 20.04. [OpenCV Github Issue #20311](https://github.com/opencv/opencv/issues/20311)
+## Reference
+
+* [Mediapipe](https://google.github.io/mediapipe/)
+* [OpenCV](https://pypi.org/project/opencv-python/)
+* [pycaw](https://github.com/AndreMiras/pycaw)
+* [alsaaudio](https://pypi.org/project/pyalsaaudio/)
+* [pyautogui](https://pypi.org/project/pyautogui/)
