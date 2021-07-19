@@ -37,23 +37,23 @@ A set of project using OpenCV and Media Pipe library.
 
 ### Hand Landmark:
 
-![HT](gallery/Output/ht.gif)
+![HT](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/ht.gif?raw=true)
 
 ### Face Detection:
 
-![face](gallery/Output/face.gif)
+![face](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/face.gif?raw=true)
 
 ### Face Mesh:
 
-![faceMesh](gallery/Output/face_mesh.gif)
+![faceMesh](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/face_mesh.gif?raw=true)
 
 ### Pose Estimation:
 
-![Pose](gallery/Output/pose_est.gif)
+![Pose](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/pose_est.gif?raw=true)
 
 ### Objectron:
 
-![Pose](gallery/Output/obj.gif)
+![Pose](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/obj.gif?raw=true)
 ## Projects
 
 * ### P1: Hand Gesture based system volume control
@@ -68,7 +68,7 @@ A set of project using OpenCV and Media Pipe library.
     - [X] Windows 10
     - [X] Ubuntu 20.04
 
-  ![hc1](gallery/Output/VolC.gif)
+  ![hc1](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/VolC.gif?raw=true)
 
 * ### P2: Finger Counter
   **Objective:**
@@ -81,7 +81,7 @@ A set of project using OpenCV and Media Pipe library.
     - [X] Windows 10
     - [X] Ubuntu 20.04
 
-  ![fc1](gallery/Output/FC.gif)
+  ![fc1](https://github.com/pranjalchanda08/MediaPipe-Project/blob/master/gallery/Output/FC.gif?raw=true)
 * ### P3: Finger Mouse control
   **Objective:**
 
